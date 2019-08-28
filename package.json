@@ -1,0 +1,25 @@
+{
+  "name": "videobooth",
+  "version": "0.0.1",
+  "description": "A Web based video booth",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndyA/videobooth.git"
+  },
+  "keywords": [
+    "video",
+    "audio",
+    "booth",
+    "node"
+  ],
+  "author": "Andy Armstrong <andy@hexten.net>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AndyA/videobooth/issues"
+  },
+  "homepage": "https://github.com/AndyA/videobooth#readme"
+}
