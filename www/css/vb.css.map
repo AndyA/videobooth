@@ -1,1 +1,0 @@
-{"version":3,"file":"vb.css","sources":["vb.scss"],"sourcesContent":["body {\n  margin: 0;\n  padding: 0;\n}\n\nvideo {\n  -webkit-transform: scaleX(-1);\n  transform: scaleX(-1);\n}\n"],"names":[],"mappings":"AAAA,AAAA,IAAI,CAAC;EACH,MAAM,EAAE,CAAC;EACT,OAAO,EAAE,CAAC,GACX;;AAED,AAAA,KAAK,CAAC;EACJ,iBAAiB,EAAE,UAAU;EAC7B,SAAS,EAAE,UAAU,GACtB"}

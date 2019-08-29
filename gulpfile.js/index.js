@@ -11,6 +11,7 @@ const sourcemaps = require("gulp-sourcemaps");
 const gls = require("gulp-live-server");
 const log = require("gulplog");
 const browserSync = require("browser-sync").create();
+const mocha = require("gulp-mocha");
 
 const ENV = "development";
 //const ENV = "production";
@@ -77,11 +78,21 @@ async function runServer() {
   watch(["bin/app.js", "lib/{common,srv}/**/*.js"], reloadApp);
 }
 
+function test() {
+  return src("test/**/*.js").pipe(mocha({ reporter: "spec" }));
+}
+
+async function tdd() {
+  watch(["test/**/*.js", "lib/**/*.js"], test);
+}
+
 const build = parallel(js, scss);
 
 module.exports = {
   js,
   scss,
   build,
+  test,
+  tdd,
   watch: series(build, runServer, sync, watchFiles)
 };
