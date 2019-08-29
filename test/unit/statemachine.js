@@ -99,4 +99,23 @@ describe("StateMachine", () => {
     fsm.input("red");
     expect(fsm.state).to.equal("idle");
   });
+
+  it("should handle triggerInitialState", () => {
+    const fsm = new StateMachine({
+      barker: { init: true },
+      idle: {}
+    });
+    const ec = new EventCatcher(fsm);
+    ec.on(["enter"]);
+    expect(fsm.state).to.equal("barker");
+    fsm.triggerInitialState();
+    expect(fsm.state).to.equal("barker");
+    expect(ec.recent()).to.deep.equal([
+      {
+        name: "enter",
+        event: { oldState: undefined, newState: "barker" },
+        state: "barker"
+      }
+    ]);
+  });
 });
