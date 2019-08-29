@@ -29,7 +29,7 @@ class EventCatcher {
 describe("StateMachine", () => {
   it("should handle transitions", () => {
     const fsm = new StateMachine({
-      barker: { init: true },
+      barker: {},
       idle: {}
     });
     const ec = new EventCatcher(fsm);
@@ -41,6 +41,7 @@ describe("StateMachine", () => {
       "enter",
       "leave"
     ]);
+    fsm.state = "barker";
     expect(fsm.state).to.equal("barker");
     fsm.goto("barker");
     expect(ec.recent()).to.deep.equal([]);
@@ -71,7 +72,7 @@ describe("StateMachine", () => {
 
   it("should respond to inputs", () => {
     const fsm = new StateMachine({
-      barker: { init: true, input: { goto: "idle" } },
+      barker: { input: { goto: "idle" } },
       idle: {
         input: [
           { on: "red", goto: "record" },
@@ -91,6 +92,7 @@ describe("StateMachine", () => {
       delete: {},
       pause: {}
     });
+    fsm.state = "barker";
     expect(fsm.state).to.equal("barker");
     fsm.input("red");
     expect(fsm.state).to.equal("idle");
@@ -102,13 +104,13 @@ describe("StateMachine", () => {
 
   it("should handle triggerInitialState", () => {
     const fsm = new StateMachine({
-      barker: { init: true },
+      barker: {},
       idle: {}
     });
     const ec = new EventCatcher(fsm);
     ec.on(["enter"]);
-    expect(fsm.state).to.equal("barker");
-    fsm.triggerInitialState();
+    expect(fsm.state).to.equal(undefined);
+    fsm.goto("barker");
     expect(fsm.state).to.equal("barker");
     expect(ec.recent()).to.deep.equal([
       {
