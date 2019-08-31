@@ -1,37 +1,72 @@
-/*
-  Blink
+// keyboard driver
 
-  Turns an LED on for one second, then off for one second, repeatedly.
+#include "Keyboard.h"
 
-  Most Arduinos have an on-board LED you can control. On the UNO, MEGA and ZERO
-  it is attached to digital pin 13, on MKR1000 on pin 6. LED_BUILTIN is set to
-  the correct LED pin independent of which board is used.
-  If you want to know what pin the on-board LED is connected to on your Arduino
-  model, check the Technical Specs of your board at:
-  https://www.arduino.cc/en/Main/Products
+const int BLUE = 2;
+const int GREEN = 3;
+const int RED = 4;
 
-  modified 8 May 2014
-  by Scott Fitzgerald
-  modified 2 Sep 2016
-  by Arturo Guadalupi
-  modified 8 Sep 2016
-  by Colby Newman
+const int DEBOUNCE = 50;
 
-  This example code is in the public domain.
+struct button {
+  unsigned long stableSince;
+  int state;
+  int nextState;
+  int input;
+} button[3];
 
-  http://www.arduino.cc/en/Tutorial/Blink
-*/
+struct key {
+  int keyCode;
+  int state;
+} key[3];
 
-// the setup function runs once when you press reset or power the board
+int checkButton(struct button *b) {
+  int newState = !digitalRead(b->input);
+  unsigned long now = millis();
+  
+  if (newState == b->nextState) {
+    if (now - b->stableSince >= DEBOUNCE)
+      b->state = newState;
+  }
+  else {
+    b->stableSince = now;
+    b->nextState = newState;
+  }
+  return b->state;
+}
+
+void handleKey(struct key *key, int state) {
+  if (key->state == state) return;
+  key->state = state;
+  if (state)
+    Keyboard.press(key->keyCode);
+  else
+    Keyboard.release(key->keyCode);
+}
+
 void setup() {
-  // initialize digital pin LED_BUILTIN as an output.
+  button[0].input = RED;
+  button[1].input = GREEN;
+  button[2].input = BLUE;
+
+  key[0].keyCode = '1';
+  key[1].keyCode = '2';
+  key[2].keyCode = '3';
+  
+  for (int i = 0; i < 3; i++) {
+    pinMode(button[i].input, INPUT_PULLUP);
+  }
   pinMode(LED_BUILTIN, OUTPUT);
+
+  Keyboard.begin();
 }
 
 // the loop function runs over and over again forever
 void loop() {
-  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(100);                       // wait for a second
-  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-  delay(100);                       // wait for a second
+  int down = 0;
+  for (int i = 0; i < 3; i++) {
+    handleKey(&key[i], checkButton(&button[i]));
+    if (key[i].state) down++;
+  }
+  digitalWrite(LED_BUILTIN, down ? HIGH : LOW);
 }
