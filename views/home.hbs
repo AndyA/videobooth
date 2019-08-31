@@ -1,9 +1,18 @@
 <video class="preview" autoplay width="1280" height="720"></video>
+<button class="start"></button>
+<button class="stop"></button>
 <div class="controls">
-  <button class="start"></button>
-  <button class="stop"></button>
-  <button class="red" data-input="red"></button>
-  <button class="green" data-input="green"></button>
-  <button class="blue" data-input="blue"></button>
-  <span class="state"></span>
+  <div class="row">
+    <button id="button-red" class="red" data-input="red"></button>
+    <label for="button-red">Red</label>
+  </div>
+  <div class="row">
+    <button id="button-green" class="green" data-input="green"></button>
+    <label for="button-green">Green</label>
+  </div>
+  <div class="row">
+    <button id="button-blue" class="blue" data-input="blue"></button>
+    <label for="button-blue">Blue</label>
+  </div>
+  <div class="row state"></div>
 </div>
