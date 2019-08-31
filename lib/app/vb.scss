@@ -18,14 +18,29 @@ video {
 
 .controls {
   position: absolute;
+  
   top: 10px;
   left: 10px;
 
-  .state {
-    font-size: 20px;
-    margin-left: 10px;
+  .row {
+    margin-top: 4px;
     padding: 4px 8px;
     background: rgba(0, 0, 0, 0.5);
+    width: 500px;
+  }
+
+  .state {
+    margin-top: 10px;
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .state,
+  label {
+    font-size: 25px;
+  }
+
+  label {
+    margin-left: 10px;
   }
 
   button {

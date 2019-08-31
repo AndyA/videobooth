@@ -30,21 +30,39 @@ describe("StateMachine", () => {
   it("should handle transitions", () => {
     const fsm = new StateMachine({
       barker: {},
-      idle: {}
+      idle: { groups: ["playing"] },
+      play: { groups: ["playing", "review"] },
+      pause: { groups: ["review"] }
     });
+
     const ec = new EventCatcher(fsm);
     ec.on([
+      // States
       "enterBarker",
       "leaveBarker",
       "enterIdle",
       "leaveIdle",
+      "enterPlay",
+      "leavePlay",
+      "enterPause",
+      "leavePause",
       "enter",
-      "leave"
+      "leave",
+      // Groups
+      "enterGroupPlaying",
+      "leaveGroupPlaying",
+      "enterGroupReview",
+      "leaveGroupReview",
+      "enterGroup",
+      "leaveGroup"
     ]);
+
     fsm.state = "barker";
     expect(fsm.state).to.equal("barker");
+
     fsm.goto("barker");
     expect(ec.recent()).to.deep.equal([]);
+
     fsm.goto("idle");
     expect(ec.recent()).to.deep.equal([
       {
@@ -58,6 +76,16 @@ describe("StateMachine", () => {
         state: "barker"
       },
       {
+        name: "enterGroupPlaying",
+        event: { oldState: "barker", newState: "idle", group: "playing" },
+        state: "idle"
+      },
+      {
+        name: "enterGroup",
+        event: { oldState: "barker", newState: "idle", group: "playing" },
+        state: "idle"
+      },
+      {
         name: "enterIdle",
         event: { oldState: "barker", newState: "idle" },
         state: "idle"
@@ -66,6 +94,40 @@ describe("StateMachine", () => {
         name: "enter",
         event: { oldState: "barker", newState: "idle" },
         state: "idle"
+      }
+    ]);
+
+    fsm.goto("play");
+    expect(ec.recent()).to.deep.equal([
+      {
+        event: { newState: "play", oldState: "idle" },
+        name: "leave",
+        state: "idle"
+      },
+      {
+        event: { newState: "play", oldState: "idle" },
+        name: "leaveIdle",
+        state: "idle"
+      },
+      {
+        event: { group: "review", newState: "play", oldState: "idle" },
+        name: "enterGroupReview",
+        state: "play"
+      },
+      {
+        event: { group: "review", newState: "play", oldState: "idle" },
+        name: "enterGroup",
+        state: "play"
+      },
+      {
+        event: { newState: "play", oldState: "idle" },
+        name: "enterPlay",
+        state: "play"
+      },
+      {
+        event: { newState: "play", oldState: "idle" },
+        name: "enter",
+        state: "play"
       }
     ]);
   });
