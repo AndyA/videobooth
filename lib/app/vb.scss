@@ -34,27 +34,27 @@ body {
   position: relative;
   margin-left: auto;
   margin-right: auto;
-  top: 700px;
-  width: 50%;
-  height: 300px;
+  top: 60vh;
+  width: 50vw;
+  height: 23vh;
   background: rgba(0, 0, 0, 0.8);
-  padding: 20px 30px;
-  border-radius: 15px;
+  padding: 2vh 2vw;
+  border-radius: 1vmax;
 
   div {
     display: inline-block;
-    width: 33%;
+    width: 32%;
     text-align: center;
+    margin: 0;
 
     input[type="image"] {
-      width: 200px;
-      height: 200px;
+      width: 10vw;
+      height: 10vw;
     }
 
     label {
       display: block;
-      font-size: 30px;
+      font-size: 2vmax;
     }
   }
 }
-
