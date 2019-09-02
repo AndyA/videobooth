@@ -2,29 +2,17 @@
   <video class="preview" autoplay muted width="{{width}}" height="{{height}}"></video>
   <video class="review" autoplay loop width="{{width}}" height="{{height}}"></video>
 </div>
-<div class="controls">
-  <div class="row">
-    <button id="button-red" class="red" data-input="red"></button>
-    <label for="button-red">Red</label>
-  </div>
-  <div class="row">
-    <button id="button-green" class="green" data-input="green"></button>
-    <label for="button-green">Green</label>
-  </div>
-  <div class="row">
-    <button id="button-blue" class="blue" data-input="blue"></button>
-    <label for="button-blue">Blue</label>
-  </div>
-  <div class="row state"></div>
-</div>
 <div class="buttons">
   <div class="red">
-    <img src="/i/512x512/red.png">
+    <input id="button-red" type="image" src="/i/256x256/red.png" data-input="red">
+    <label for="button-red">Red</label>
   </div>
   <div class="green">
-    <img src="/i/512x512/green.png">
+    <input id="button-green" type="image" src="/i/256x256/green.png" data-input="green">
+    <label for="button-green">Green</label>
   </div>
   <div class="blue">
-    <img src="/i/512x512/blue.png">
+    <input id="button-blue" type="image" src="/i/256x256/blue.png" data-input="blue">
+    <label for="button-blue">Blue</label>
   </div>
 </div>
